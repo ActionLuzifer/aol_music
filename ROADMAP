@@ -1,0 +1,20 @@
+0.1
+	alle Alben werden geladen und in ein Standardverzeichnis gespeichert
+
+0.2
+	GUI welche alle Alben anzeigt, aus der man wählen welches Album man will und nur diese werden geladen
+
+0.3
+	Auswahl des DownloadVerzeichnis
+
+0.4
+	Auswahl nach welchem Muster die Dateien gespeichert werden sollen
+
+0.5
+	geladene Alben soll per externes Programm in mp3;cbr;192kbs umgewandelt werden
+
+0.6
+	Zielcodec/kbs/...konfigurierbar
+
+1.0
+	In der GUI kann man auswählen aus welchen Angeboten von aol-music man die Alben haben möchte und danach wählt man man seine Wunschalben aus
