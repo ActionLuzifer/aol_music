@@ -1,5 +1,4 @@
-import urllib
-import json
+import track;
 
 class Album:
     '''
@@ -7,33 +6,40 @@ class Album:
      * - Album enthält alle Informationen die zum einem Album dazugehören
      * - Album beherbergt auch die Funktionen zum Herunterladen der Datei und der anschließenden Konvertierung
      */
-     downloadTo( /path );
-     convert(); <-- mp3,cbr,192kbit IF this track was downloaded
-     tag();     <-- taggt die Datei IF this track was downloaded
+     pub_downloadTo( /path );
+     pub_convert(); <-- mp3,cbr,192kbit IF this track was downloaded
+     pub_tag();     <-- taggt die Datei IF this track was downloaded
     '''
     
-    def __init__(self, f_albumjson):
+    def __init__(self, mf_albumjson):
         self._wasDownloaded = False;
-        self.albumjson = f_albumjson;
-        self._album_art         = ""; #"http:\/\/www.aolcdn.com\/music_lp\/wethe_sun204.jpg",
-        self._album_name        = ""; #"Sunshine State of Mind",
-        self._album_thumbnail   = ""; #"http:\/\/www.aolcdn.com\/music_lp\/wethe_sun204.jpg",
-        self._artist_name       = ""; #"We the Kings",
-        self._artist_profile    = ""; #null
-        self._ch_id             = ""; #"12625",
-        self._commerce          = ""; #"http:\/\/itunes.apple.com\/us\/album\/sunshine-state-of-mind\/id444929978",
-        self._copyright         = ""; #null
-        self._description       = ""; #"Combining '80s power pop hooks and a bright Florida-born sound, this band's latest record is fresh-squeezed. ",
-        self._label             = ""; #"[object Object]",
-        self._lyrics            = ""; #"http:\/\/www.metrolyrics.com\/we-the-kings-lyrics.html",
-        self._playlist_id       = ""; #"2741",
-        self._release_date      = ""; #"",
-        self._sponsor           = ""; #null
-        self._upc               = ""; #""
-        self._count             = 0; #10
+        self.albumjson = mf_albumjson;
+        self._album_art         = self.albumjson['cdlp']['album_art']; #"http:\/\/www.aolcdn.com\/music_lp\/wethe_sun204.jpg",
+        self._album_name        = self.albumjson['cdlp']['album_name']; #"Sunshine State of Mind",
+        self._album_thumbnail   = self.albumjson['cdlp']['album_thumbnail']; #"http:\/\/www.aolcdn.com\/music_lp\/wethe_sun204.jpg",
+        self._artist_name       = self.albumjson['cdlp']['artist_name']; #"We the Kings",
+        self._artist_profile    = self.albumjson['cdlp']['artist_profile']; #null
+        self._ch_id             = self.albumjson['cdlp']['ch_id']; #"12625",
+        self._commerce          = self.albumjson['cdlp']['commerce']; #"http:\/\/itunes.apple.com\/us\/album\/sunshine-state-of-mind\/id444929978",
+        self._copyright         = self.albumjson['cdlp']['copyright']; #null
+        self._description       = self.albumjson['cdlp']['description']; #"Combining '80s power pop hooks and a bright Florida-born sound, this band's latest record is fresh-squeezed. ",
+        self._label             = self.albumjson['cdlp']['label']; #"[object Object]",
+        self._lyrics            = self.albumjson['cdlp']['lyrics']; #"http:\/\/www.metrolyrics.com\/we-the-kings-lyrics.html",
+        self._playlist_id       = self.albumjson['cdlp']['playlist_id']; #"2741",
+        self._release_date      = self.albumjson['cdlp']['release_date']; #"",
+        self._sponsor           = self.albumjson['cdlp']['sponsor']; #null
+        self._upc               = self.albumjson['cdlp']['upc']; #""
+        self._count             = self.albumjson['count']; #10
         self._queueOfTrack      = [];
+        self.priv_createTracks(self.albumjson['tracks']);
         
-    
+    def priv_createTracks(self, mf_tracksJSONobj):
+        trackNr = 0;
+        for jtrack in mf_tracksJSONobj:
+            trackNr = trackNr+1;
+            mytrack = track.Track(self, jtrack, trackNr);
+            self._queueOfTrack.append(mytrack);
+
     def getwasDownloaded(self):
         return self._wasDownloaded;
     
@@ -85,5 +91,6 @@ class Album:
     def getcount(self):
         return self._count;
     
-    def setInformations(self, htmllink):
-        html_str = urllib.request.urlopen(htmllink);
+    def pub_downloadTo(self, mf_path, mf_really):
+        for mytrack in self._queueOfTrack:
+            mytrack.pub_downloadTo(mf_path, mf_really);

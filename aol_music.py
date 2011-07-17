@@ -7,47 +7,51 @@ import os
 import re
 import json
 import urllib.request
+
+# meine Klassen
+sys.path.append("src");
 import album
 
-def urlToString(url):
+
+def priv_urlToString(url):
     htmldings = urllib.request.urlopen(url);
-    htmldings = str(htmldings.read());
-    bigRE = "b'(?P<wanted>.*)'";
-    REprogramm = re.compile(bigRE);
-    foundObject = REprogramm.search(htmldings);
-    htmldings = foundObject.group("wanted")
-    return htmldings;
+    return str(htmldings.read().decode('utf-8'));
+
+def priv_checkForPath():
+    mypath = os.path.dirname("{0}".format(sys.argv[0])) + "/download";
+    if not os.path.exists(mypath):
+        os.system("mkdir {0}".format(mypath));
+    return mypath;
+        
+
 
 # 1. Website laden
 mainLink = "http://music.aol.com/new-releases-full-cds";
-html_str = urlToString(mainLink);
+html_str = priv_urlToString(mainLink);
 
 # 2. Anzahl der Alben feststellen
 anzahlAlben = 0;
 bigRE = "playlisturl=\"(?P<PlaylistUrl>\\S*)\"";
 REprogramm = re.compile(bigRE);
-html_str = html_str.split("\\n");
+html_str = html_str.split("\n");
 listOfAlben = [];
 for line in html_str:
-    
-    
   line = line.strip();
   foundObject = REprogramm.search(line);
   if(foundObject):
     anzahlAlben = anzahlAlben+1;
-    albumstr = urlToString(foundObject.group("PlaylistUrl"));
+    urlstr = foundObject.group("PlaylistUrl");
+    albumstr = priv_urlToString(urlstr);
+    albumstr = albumstr.replace("\/", "/");
     albumjson = json.loads(albumstr);
     newalbum = album.Album(albumjson);
     listOfAlben.append(newalbum);
 
 print("Anzahl Alben:     %d" % (anzahlAlben));
 print("Laenge der Liste: %d" % listOfAlben.__len__()); 
-#print(outputstr);
 
-# 3. Namen der Interpreten und Alben ermitteln (+ eventuell Links zum Cover)
-
-# 4. Informationen von 3. anzeigen und Benutzer auswählen lassen
-
-# 5. Links zu den ausgewählten Dateien ermitteln
-
+#ALLE runterladen
+downloadpath = priv_checkForPath();
+for myalbum in listOfAlben:
+    myalbum.pub_downloadTo(downloadpath, False);
 # 6. Dateien konvertieren
