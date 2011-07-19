@@ -97,7 +97,7 @@ class GUI(QtGui.QWidget):
         self.goButton = Qt.QPushButton("Lade ausgewählte Alben", self.scrollWidget)
         self.goButton.move(0, self.scrollWidget.height()-20)
         self.goButton.resize(self.scrollWidget.width(), 20)
-#        self.connect(self.goButton, Qt.SIGNAL("clicked()"), self.priv_goButtonClicked())
+        self.connect(self.goButton, Qt.SIGNAL("clicked()"), self.priv_goButtonClicked)
         self.goButton.show()
                 
                 
