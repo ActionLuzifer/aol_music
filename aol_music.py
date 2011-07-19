@@ -11,19 +11,24 @@ import urllib.request
 # meine Klassen
 sys.path.append("src");
 import album
+import gui
 
 
 def priv_urlToString(url):
     htmldings = urllib.request.urlopen(url);
     return str(htmldings.read().decode('utf-8'));
 
-def priv_checkForPath():
-    mypath = os.path.dirname("{0}".format(sys.argv[0])) + "/download";
+def priv_checkForPath(mf_subPath):
+    mypath = os.path.dirname("{0}".format(sys.argv[0])) + mf_subPath;
     if not os.path.exists(mypath):
         os.system("mkdir {0}".format(mypath));
     return mypath;
-        
 
+def priv_checkForDownloadPath():
+    return priv_checkForPath("/download")
+            
+def priv_checkForImagePath():
+    return priv_checkForPath("/images")
 
 # 1. Website laden
 mainLink = "http://music.aol.com/new-releases-full-cds";
@@ -51,7 +56,10 @@ print("Anzahl Alben:     %d" % (anzahlAlben));
 print("Laenge der Liste: %d" % listOfAlben.__len__()); 
 
 #ALLE runterladen
-downloadpath = priv_checkForPath();
-for myalbum in listOfAlben:
-    myalbum.pub_downloadTo(downloadpath, False);
+downloadpath = priv_checkForDownloadPath()
+imagepath = priv_checkForImagePath()
+
+maingui = gui.GUI(listOfAlben, downloadpath, imagepath)
+#for myalbum in listOfAlben:
+#    myalbum.pub_downloadTo(downloadpath, False);
 # 6. Dateien konvertieren
