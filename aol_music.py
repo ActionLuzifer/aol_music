@@ -7,6 +7,7 @@ import os
 import re
 import json
 import urllib.request
+from PyQt4 import QtGui
 
 # meine Klassen
 sys.path.append("src");
@@ -59,7 +60,10 @@ print("Laenge der Liste: %d" % listOfAlben.__len__());
 downloadpath = priv_checkForDownloadPath()
 imagepath = priv_checkForImagePath()
 
+qapp = QtGui.QApplication(sys.argv);
 maingui = gui.GUI(listOfAlben, downloadpath, imagepath)
+sys.exit(qapp.exec_()) 
+
 #for myalbum in listOfAlben:
 #    myalbum.pub_downloadTo(downloadpath, False);
 # 6. Dateien konvertieren
