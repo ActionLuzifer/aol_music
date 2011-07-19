@@ -2,10 +2,12 @@
 
 import math
 from PyQt4 import QtGui
+#from PyQt4 import QtCore
+from PyQt4 import Qt
 
 import gui_Album
 
-class GUI(QtGui.QFrame):
+class GUI(QtGui.QWidget):
     '''
     /**
      * - der sichtbare Teil der Applikation
@@ -14,6 +16,19 @@ class GUI(QtGui.QFrame):
      getSelectedAlben(self);
     '''
 
+
+    def priv_goButtonClicked(self):
+        for albumgui in self.albumToDownloadList:
+            albumgui.m_album.pub_downloadTo(self.m_downloadPath, True)
+
+
+    def pub_addAlbumToDownloadList(self, gui_album):
+        self.albumToDownloadList.append(gui_album)
+
+
+    def pub_removeAlbumFromDownloadList(self, gui_album):
+        self.albumToDownloadList.remove(gui_album)
+        
     
     def priv_setNextRowAndColumn(self):
         if(self.aktColumn == self.maxRows):
@@ -39,7 +54,7 @@ class GUI(QtGui.QFrame):
                 ww = wx+aw
             if(wh < wy+ah):
                 wh = wy+ah 
-        self.scrollWidget.resize(ww, wh)
+        self.scrollWidget.resize(ww, wh+30)
         
             
     def resizeEvent(self, ev):
@@ -48,7 +63,7 @@ class GUI(QtGui.QFrame):
     
     def __init__(self, mf_listOfAlben, mf_downloadPath, mf_imagePath, parent=None):
         QtGui.QWidget.__init__(self, parent)
-        
+        self.albumToDownloadList = []
         self.m_listOfAlben = mf_listOfAlben
         self.m_downloadPath = mf_downloadPath 
         self.m_imagepath = mf_imagePath
@@ -68,26 +83,32 @@ class GUI(QtGui.QFrame):
         self.m_scrollArea = QtGui.QScrollArea(self)
         self.scrollWidget = QtGui.QWidget(self)
         self.m_scrollArea.setWidget(self.scrollWidget)
-        self.m_scrollArea.setGeometry(0,0, 800, 600)
         self.m_scrollArea.show()
-        self.scrollWidget.setGeometry(0,0, 800, 600)
         self.scrollWidget.show()        
-        
         self.show()
+        self.resize(800,600)
+        self.move(30,30)
         
         self.listOfAlbenWidgets = []
         for album in self.m_listOfAlben:
                 self.priv_createWidgets(album)
 
         self.priv_arrangeAlben()
-        
-
+        self.goButton = Qt.QPushButton("Lade ausgewählte Alben", self.scrollWidget)
+        self.goButton.move(0, self.scrollWidget.height()-20)
+        self.goButton.resize(self.scrollWidget.width(), 20)
+#        self.connect(self.goButton, Qt.SIGNAL("clicked()"), self.priv_goButtonClicked())
+        self.goButton.show()
+                
+                
     def priv_createWidgets(self, mf_album):
         albumWidget = gui_Album.AlbumGUI(mf_album.getalbum_thumbnail(), 
                                          self.m_imagepath,
                                          mf_album.getartist_name(), 
                                          mf_album.getalbum_name(), 
                                          mf_album.getdescription(),
+                                         self,
+                                         mf_album,
                                          self.scrollWidget)
         self.listOfAlbenWidgets.append(albumWidget)
 
