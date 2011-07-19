@@ -50,7 +50,7 @@ for line in html_str:
     albumstr = priv_urlToString(urlstr);
     albumstr = albumstr.replace("\/", "/");
     albumjson = json.loads(albumstr);
-    newalbum = album.Album(albumjson);
+    newalbum = album.Album(albumjson, urlstr);
     listOfAlben.append(newalbum);
 
 print("Anzahl Alben:     %d" % (anzahlAlben));
