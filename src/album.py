@@ -96,6 +96,7 @@ class Album:
         fileStr = "{}_-_{}_-_{:0>2}.json".format(self.getartist_name().replace(" ", "_"), self.getalbum_name().replace(" ", "_"), "00")
         myfile = open("{0}/{1}".format(mf_path, fileStr), 'w')
         myfile.write(self.m_albumjsonFormattedStr)
+        myfile.close()
 
         for mytrack in self._queueOfTrack:
             mytrack.pub_downloadTo(mf_path, mf_really);
