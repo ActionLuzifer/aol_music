@@ -54,9 +54,6 @@ for line in html_str:
     newalbum = album.Album(albumjson, albumjsonFormatted);
     listOfAlben.append(newalbum);
 
-print("Anzahl Alben:     %d" % (anzahlAlben));
-print("Laenge der Liste: %d" % listOfAlben.__len__()); 
-
 #ALLE runterladen
 downloadpath = priv_checkForDownloadPath()
 imagepath = priv_checkForImagePath()
