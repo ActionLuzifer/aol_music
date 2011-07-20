@@ -100,15 +100,3 @@ class Album:
 
         for mytrack in self._queueOfTrack:
             mytrack.pub_downloadTo(mf_path, mf_really);
-            
-    def pub_replaceBadChars(self, mf_executeStr):
-        mf_executeStr = mf_executeStr.replace("'", '\\"').replace('"', "'")
-        mf_executeStr = mf_executeStr.replace(" ", "_")
-        mf_executeStr = mf_executeStr.replace("/", "-")
-        mf_executeStr = mf_executeStr.replace("(", "\(")
-        mf_executeStr = mf_executeStr.replace(")", "\)")
-        mf_executeStr = mf_executeStr.replace("&", "\&")
-        mf_executeStr = mf_executeStr.replace("!", "\!")
-        mf_executeStr = mf_executeStr.replace("?", "\?")
-        mf_executeStr = mf_executeStr.replace("&amp;", "&")        
-        return mf_executeStr
