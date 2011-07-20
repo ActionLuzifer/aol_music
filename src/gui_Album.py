@@ -27,7 +27,6 @@ class AlbumGUI(QtGui.QWidget):
     
     def priv_check4Image(self, mf_thumpnailUrl):
         thumpnailSplitstring = mf_thumpnailUrl.split("/")
-        print (thumpnailSplitstring.__len__())
         return thumpnailSplitstring[thumpnailSplitstring.__len__() - 1]
 
 
@@ -49,12 +48,10 @@ class AlbumGUI(QtGui.QWidget):
     
     def mousePressEvent(self, event):
         if self.alreadyChosen:
-            print("removeMe")
             self.m_mainGUI.pub_removeAlbumFromDownloadList(self)
             self.alreadyChosen = False
             self.setPalette(self.m_pal_notChosen)
         else:
-            print("addMe")
             self.m_mainGUI.pub_addAlbumToDownloadList(self)
             self.alreadyChosen = True
             self.setPalette(self.m_pal_chosen)
@@ -69,7 +66,6 @@ class AlbumGUI(QtGui.QWidget):
         self.m_album   = mf_album
         self.alreadyChosen = False  
         self.m_thumpnailName = self.priv_check4Image(mf_thumpnailUrl)
-        print(self.m_thumpnailName)
         self.m_imagepathAndName = self.m_imagepath + "/" + self.m_thumpnailName
         if not(self.priv_checkImageExists(self.m_imagepathAndName)):
             self.loadImageFromNet(self.m_thumpnailUrl, self.m_imagepathAndName)
