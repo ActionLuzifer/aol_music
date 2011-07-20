@@ -109,4 +109,5 @@ class Album:
         mf_executeStr = mf_executeStr.replace("&", "\&")
         mf_executeStr = mf_executeStr.replace("!", "\!")
         mf_executeStr = mf_executeStr.replace("?", "\?")
+        mf_executeStr = mf_executeStr.replace("&amp;", "&")        
         return mf_executeStr
