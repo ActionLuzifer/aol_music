@@ -26,8 +26,7 @@ class Track:
         return urllib.request.urlopen(url).read();
 
 
-    def pub_downloadTo(self, mf_path, mf_really):
-        fileStr = "{}_-_{}_-_{:0>2}_-_{}.flv".format(self.m_album.getartist_name(), self.m_album.getalbum_name(), self.m_trackNr, self.m_title)
+    def pub_downloadTo(self, mf_path, mf_really, fileStr):
         if mf_really :
             myTrackFile = open("{0}/{1}".format(mf_path, fileStr), 'wb')
             myTrackFile.write(self.priv_urlToStringData(self.m_url))

@@ -99,4 +99,5 @@ class Album:
         myfile.close()
 
         for mytrack in self._queueOfTrack:
-            mytrack.pub_downloadTo(mf_path, mf_really);
+            trackfileStr = "{}_-_{}_-_{:0>2}_-_{}.flv".format(self.getartist_name(), self.getalbum_name(), mytrack.m_trackNr, mytrack.m_title)
+            mytrack.pub_downloadTo(mf_path, mf_really, trackfileStr);
