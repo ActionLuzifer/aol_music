@@ -1,5 +1,4 @@
 import track
-import os
 
 class Album:
     '''
@@ -12,10 +11,10 @@ class Album:
      pub_tag();     <-- taggt die Datei IF this track was downloaded
     '''
     
-    def __init__(self, mf_albumjson, mf_albumjsonUrl):
+    def __init__(self, mf_albumjson, mf_albumjsonFormatted):
         self._wasDownloaded = False;
         self.albumjson = mf_albumjson;
-        self.m_albumjsonUrl = mf_albumjsonUrl
+        self.m_albumjsonFormattedStr = mf_albumjsonFormatted
         self._album_art         = self.albumjson['cdlp']['album_art']; #"http:\/\/www.aolcdn.com\/music_lp\/wethe_sun204.jpg",
         self._album_name        = self.albumjson['cdlp']['album_name']; #"Sunshine State of Mind",
         self._album_thumbnail   = self.albumjson['cdlp']['album_thumbnail']; #"http:\/\/www.aolcdn.com\/music_lp\/wethe_sun204.jpg",
@@ -94,12 +93,10 @@ class Album:
         return self._count;
     
     def pub_downloadTo(self, mf_path, mf_really):
-        fileStr = self.pub_replaceBadChars("{}_-_{}_-_{:0>2}.json".format(self.getartist_name().replace(" ", "_"), self.getalbum_name().replace(" ", "_"), "00"))
-        executeStr = "wget {} -O{}/".format(self.m_albumjsonUrl, mf_path) + fileStr
-        if mf_really :
-            os.system(executeStr)
-        else:
-            print(executeStr)
+        fileStr = "{}_-_{}_-_{:0>2}.json".format(self.getartist_name().replace(" ", "_"), self.getalbum_name().replace(" ", "_"), "00")
+        myfile = open("{0}/{1}".format(mf_path, fileStr), 'w')
+        myfile.write(self.m_albumjsonFormattedStr)
+
         for mytrack in self._queueOfTrack:
             mytrack.pub_downloadTo(mf_path, mf_really);
             
