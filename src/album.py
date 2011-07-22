@@ -1,4 +1,7 @@
+import os
 import track
+import sys
+import public_functions
 
 class Album:
     '''
@@ -94,10 +97,23 @@ class Album:
     
     def pub_downloadTo(self, mf_path, mf_really):
         fileStr = "{}_-_{}_-_{:0>2}.json".format(self.getartist_name().replace(" ", "_"), self.getalbum_name().replace(" ", "_"), "00")
-        myfile = open("{0}/{1}".format(mf_path, fileStr), 'w')
+        myfileName = os.path.normpath("{0}/{1}".format(mf_path, fileStr))
+        print("TEST")                                      
+        print(myfileName)
+        print(public_functions.pub_getPathStrWithoutLaufwerk(myfileName))
+        if sys.platform.startswith('win32') or sys.platform.startswith('cygwin'):
+            myfileArray = public_functions.pub_getPathStrWithoutLaufwerk(myfileName)
+            myfileName = myfileArray[0] + public_functions.pub_replaceBadChars(myfileArray[1])
+        print(myfileName)
+        myfile = open(myfileName, 'w')
         myfile.write(self.m_albumjsonFormattedStr)
         myfile.close()
 
         for mytrack in self._queueOfTrack:
             trackfileStr = "{}_-_{}_-_{:0>2}_-_{}.flv".format(self.getartist_name(), self.getalbum_name(), mytrack.m_trackNr, mytrack.m_title)
+            if sys.platform.startswith('win32') or sys.platform.startswith('cygwin'):
+                print(trackfileStr)
+                myfileArray = public_functions.pub_getPathStrWithoutLaufwerk(trackfileStr)
+                trackfileStr = myfileArray[0] + public_functions.pub_replaceBadChars(myfileArray[1])
+                print(trackfileStr)
             mytrack.pub_downloadTo(mf_path, mf_really, trackfileStr);

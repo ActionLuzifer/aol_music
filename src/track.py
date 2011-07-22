@@ -1,3 +1,4 @@
+import os
 import public_functions
 
 class Track:
@@ -23,7 +24,7 @@ class Track:
 
     def pub_downloadTo(self, mf_path, mf_really, fileStr):
         if mf_really :
-            myTrackFile = open("{0}/{1}".format(mf_path, fileStr), 'wb')
+            myTrackFile = open(os.path.normpath("{0}/{1}".format(mf_path, fileStr)), 'wb')
             myTrackFile.write(public_functions.pub_urlToStringData(self.m_url))
             myTrackFile.close()
         else:

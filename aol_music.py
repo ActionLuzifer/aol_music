@@ -56,7 +56,9 @@ for line in html_str:
 
 #ALLE runterladen
 downloadpath = priv_checkForDownloadPath()
+print(downloadpath)
 imagepath = priv_checkForImagePath()
+print(imagepath)
 
 qapp = QtGui.QApplication(sys.argv);
 maingui = gui.GUI(listOfAlben, downloadpath, imagepath)
