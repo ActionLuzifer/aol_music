@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import sys
 import os
+import public_functions
 
 from PyQt4 import QtGui
 #from PyQt4 import QtCore
@@ -35,7 +36,9 @@ class AlbumGUI(QtGui.QWidget):
         
         
     def loadImageFromNet(self, mf_url, mf_imagePathAndName):
-        os.system("wget "+mf_url+ " -O"+mf_imagePathAndName)
+        ImageFile = open(mf_imagePathAndName, 'wb')
+        ImageFile.write(public_functions.pub_urlToStringData(mf_url))
+        ImageFile.close()
         
         
     def pub_getWidth(self):

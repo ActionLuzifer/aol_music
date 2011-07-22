@@ -1,5 +1,4 @@
-import os
-import urllib.request
+import public_functions
 
 class Track:
     '''
@@ -22,14 +21,10 @@ class Track:
         self.m_duration  = self.m_trackJSONobj['duration']; #"184"
 
 
-    def priv_urlToStringData(self, url):
-        return urllib.request.urlopen(url).read();
-
-
     def pub_downloadTo(self, mf_path, mf_really, fileStr):
         if mf_really :
             myTrackFile = open("{0}/{1}".format(mf_path, fileStr), 'wb')
-            myTrackFile.write(self.priv_urlToStringData(self.m_url))
+            myTrackFile.write(public_functions.pub_urlToStringData(self.m_url))
             myTrackFile.close()
         else:
             print("{0} -> {1}/{2}".format(self.m_url, mf_path, fileStr))
