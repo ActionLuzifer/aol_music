@@ -20,10 +20,10 @@ def priv_urlToString(url):
     return str(htmldings.read().decode('utf-8'));
 
 def priv_checkForPath(mf_subPath):
-    mypath = os.path.normpath(os.path.dirname("{0}".format(os.getcwd())) + mf_subPath);
+    mypath = os.path.normpath(os.path.dirname("{0}".format(os.getcwd())) + mf_subPath)
     if not os.path.exists(mypath):
-        os.system("mkdir {0}".format(mypath));
-    return mypath;
+        os.system("mkdir {0}".format(mypath))
+    return mypath
 
 def priv_checkForDownloadPath():
     return priv_checkForPath("/download")
