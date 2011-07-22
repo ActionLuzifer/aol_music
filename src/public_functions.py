@@ -18,3 +18,9 @@ def pub_getPathStrWithoutLaufwerk(mf_executeStr):
         firstStr = mf_executeStr[0:3]
         secondStr =  mf_executeStr[3:]
     return firstStr,secondStr
+
+def pub_getOSFilenameStr(mf_filenameStr):
+    if sys.platform.startswith('win32') or sys.platform.startswith('cygwin'):
+        myfileArray = pub_getPathStrWithoutLaufwerk(mf_filenameStr)
+        mf_filenameStr = myfileArray[0] + pub_replaceBadChars(myfileArray[1])
+    return mf_filenameStr
