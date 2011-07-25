@@ -6,9 +6,11 @@ def pub_urlToStringData(url):
     return urllib.request.urlopen(url).read();
 
 def pub_replaceBadChars(mf_executeStr):
+    mf_executeStr = mf_executeStr.replace(" ", "_")
     mf_executeStr = mf_executeStr.replace("/", "-")
-    mf_executeStr = mf_executeStr.replace(":", "-")
-    mf_executeStr = mf_executeStr.replace("?", "_")
+    if sys.platform.startswith('win32') or sys.platform.startswith('cygwin'):
+        mf_executeStr = mf_executeStr.replace(":", "-")
+        mf_executeStr = mf_executeStr.replace("?", "_")
     return mf_executeStr
 
 def pub_getPathStrWithoutLaufwerk(mf_executeStr):
@@ -20,10 +22,11 @@ def pub_getPathStrWithoutLaufwerk(mf_executeStr):
     return firstStr,secondStr
 
 def pub_getOSFilenameStr(mf_filenameStr):
-    mf_filenameStr = mf_filenameStr.replace(" ", "_")
     if sys.platform.startswith('win32') or sys.platform.startswith('cygwin'):
         myfileArray = pub_getPathStrWithoutLaufwerk(mf_filenameStr)
         mf_filenameStr = myfileArray[0] + pub_replaceBadChars(myfileArray[1])
+    else:
+        mf_filenameStr = pub_replaceBadChars(mf_filenameStr)
     return mf_filenameStr
 
 def pub_transcode(mf_path, mf_trackfileStr, mf_fileEndingBefore, mf_fileEndingAfter):
@@ -31,7 +34,8 @@ def pub_transcode(mf_path, mf_trackfileStr, mf_fileEndingBefore, mf_fileEndingAf
     print(executeStr)
     os.system(executeStr)
     
-
+def pub_removeFile(mf_path, mf_trackfileStr):
+    os.remove(pub_getPath(mf_path, mf_trackfileStr))
     
 def pub_getPath(mf_path, mf_file):
     return os.path.normpath("{0}/{1}".format(mf_path, mf_file))
