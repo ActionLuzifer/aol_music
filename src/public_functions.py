@@ -26,10 +26,12 @@ def pub_getOSFilenameStr(mf_filenameStr):
         mf_filenameStr = myfileArray[0] + pub_replaceBadChars(myfileArray[1])
     return mf_filenameStr
 
-def pub_transcode(mf_path, mf_really, mf_trackfileStr, mf_fileEndingBefore, mf_fileEndingAfter):
+def pub_transcode(mf_path, mf_trackfileStr, mf_fileEndingBefore, mf_fileEndingAfter):
     executeStr = "mplayer -dumpaudio -dumpfile \"{0}{1}\" \"{0}{2}\"".format(pub_getPath(mf_path, mf_trackfileStr), mf_fileEndingAfter, mf_fileEndingBefore)
     print(executeStr)
     os.system(executeStr)
+    
+
     
 def pub_getPath(mf_path, mf_file):
     return os.path.normpath("{0}/{1}".format(mf_path, mf_file))

@@ -110,4 +110,4 @@ class Album:
         for mytrack in self._queueOfTrack:
             trackfileStr = public_functions.pub_getOSFilenameStr("{}_-_{}_-_{:0>2}_-_{}".format(self.getartist_name(), self.getalbum_name(), mytrack.m_trackNr, mytrack.m_title))
             mytrack.pub_downloadTo(mf_path, mf_really, trackfileStr+".flv");
-            public_functions.pub_transcode(mf_path, mf_really, trackfileStr, ".flv", ".mp3")
+            public_functions.pub_transcode(mf_path, trackfileStr, ".flv", ".mp3")
