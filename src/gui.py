@@ -116,8 +116,3 @@ class GUI(QtGui.QWidget):
             self.maxWidth = albumWidget.pub_getWidth()
         if(self.maxHeight < albumWidget.pub_getHeight()):
             self.maxHeight = albumWidget.pub_getHeight()
-
-
-if __name__ == '__main__':
-    listOfAlben =[]
-    gui = GUI(listOfAlben, "")
