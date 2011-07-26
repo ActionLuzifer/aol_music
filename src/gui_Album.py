@@ -105,11 +105,3 @@ class AlbumGUI(QtGui.QWidget):
         # Hauptfenster anzeigen
         self.resize(maxbreite, maxheight)
         self.show()
-        
-        
-if __name__ == '__main__':
-    qapp = QtGui.QApplication(sys.argv);
-    thumpnailURL = "http://o.aolcdn.com/os/music/CD-Listening-Party/shaggy_summerinkingston204.jpg"
-    imagesPath = priv_checkForDownloadPath()
-    gui = AlbumGUI(thumpnailURL, imagesPath, "Shaggy", "Summer in Kingston", "The &#039;It Wasn&#039;t Me&#039; singer is ready for another comeback with this latest release inspired by Shaggy&#039;s affinity for Jamaican singers. ")
-    sys.exit(qapp.exec_()) 
