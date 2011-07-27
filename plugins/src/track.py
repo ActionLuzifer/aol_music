@@ -1,4 +1,3 @@
-import os
 import public_functions
 
 class Track:
@@ -24,8 +23,8 @@ class Track:
 
     def pub_downloadTo(self, mf_path, mf_really, fileStr):
         if mf_really :
-            myTrackFile = open(public_functions.pub_getPath(mf_path, fileStr), 'wb')
-            myTrackFile.write(public_functions.pub_urlToStringData(self.m_url))
+            myTrackFile = open(public_functions.f_getPath(mf_path, fileStr), 'wb')
+            myTrackFile.write(public_functions.f_urlToStringData(self.m_url))
             myTrackFile.close()
         else:
             print("{0} -> {1}/{2}".format(self.m_url, mf_path, fileStr))

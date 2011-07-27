@@ -96,7 +96,7 @@ class Album:
     
     def pub_downloadTo(self, mf_path, mf_really):
         # download json-file
-        fileStr = public_functions.pub_getOSFilenameStr("{}_-_{}_-_".format(self.getartist_name(), self.getalbum_name()))
+        fileStr = public_functions.f_getOSFilenameStr("{}_-_{}_-_".format(self.getartist_name(), self.getalbum_name()))
         myfileName = os.path.normpath("{0}/{1}00.json".format(mf_path, fileStr))
         myfile = open(myfileName, 'w')
         myfile.write(self.m_albumjsonFormattedStr)
@@ -104,11 +104,11 @@ class Album:
         # kopiere Cover
         myCoverName = os.path.normpath("{0}/{1}00.jpg".format(mf_path, fileStr))
         myCover = open(myCoverName, 'wb')
-        myCover.write(public_functions.pub_urlToStringData(self.getalbum_thumbnail()))
+        myCover.write(public_functions.f_urlToStringData(self.getalbum_thumbnail()))
         myCover.close()
         
         for mytrack in self._queueOfTrack:
-            trackfileStr = public_functions.pub_getOSFilenameStr(fileStr + "{:0>2}_-_{}".format(mytrack.m_trackNr, mytrack.m_title))
+            trackfileStr = public_functions.f_getOSFilenameStr(fileStr + "{:0>2}_-_{}".format(mytrack.m_trackNr, mytrack.m_title))
             mytrack.pub_downloadTo(mf_path, mf_really, trackfileStr+".flv");
-            public_functions.pub_transcode(mf_path, trackfileStr, ".flv", ".mp3")
-            public_functions.pub_removeFile(mf_path, trackfileStr + ".flv")
+            public_functions.f_transcode(mf_path, trackfileStr, ".flv", ".mp3")
+            public_functions.f_removeFile(mf_path, trackfileStr + ".flv")

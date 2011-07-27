@@ -2,10 +2,10 @@ import os
 import sys
 import urllib.request
 
-def pub_urlToStringData(url):
+def f_urlToStringData(url):
     return urllib.request.urlopen(url).read();
 
-def pub_replaceBadChars(mf_executeStr):
+def f_replaceBadChars(mf_executeStr):
     mf_executeStr = mf_executeStr.replace(" ", "_")
     mf_executeStr = mf_executeStr.replace("/", "-")
     if sys.platform.startswith('win32') or sys.platform.startswith('cygwin'):
@@ -13,7 +13,7 @@ def pub_replaceBadChars(mf_executeStr):
         mf_executeStr = mf_executeStr.replace("?", "_")
     return mf_executeStr
 
-def pub_getPathStrWithoutLaufwerk(mf_executeStr):
+def f_getPathStrWithoutLaufwerk(mf_executeStr):
     firstStr = ""
     secondStr = mf_executeStr
     if sys.platform.startswith('win32') or sys.platform.startswith('cygwin'):
@@ -21,21 +21,40 @@ def pub_getPathStrWithoutLaufwerk(mf_executeStr):
         secondStr =  mf_executeStr[3:]
     return firstStr,secondStr
 
-def pub_getOSFilenameStr(mf_filenameStr):
+def f_getOSFilenameStr(mf_filenameStr):
     if sys.platform.startswith('win32') or sys.platform.startswith('cygwin'):
-        myfileArray = pub_getPathStrWithoutLaufwerk(mf_filenameStr)
-        mf_filenameStr = myfileArray[0] + pub_replaceBadChars(myfileArray[1])
+        myfileArray = f_getPathStrWithoutLaufwerk(mf_filenameStr)
+        mf_filenameStr = myfileArray[0] + f_replaceBadChars(myfileArray[1])
     else:
-        mf_filenameStr = pub_replaceBadChars(mf_filenameStr)
+        mf_filenameStr = f_replaceBadChars(mf_filenameStr)
     return mf_filenameStr
 
-def pub_transcode(mf_path, mf_trackfileStr, mf_fileEndingBefore, mf_fileEndingAfter):
-    executeStr = "mplayer -dumpaudio -dumpfile \"{0}{1}\" \"{0}{2}\"".format(pub_getPath(mf_path, mf_trackfileStr), mf_fileEndingAfter, mf_fileEndingBefore)
+def f_transcode(mf_path, mf_trackfileStr, mf_fileEndingBefore, mf_fileEndingAfter):
+    executeStr = "mplayer -dumpaudio -dumpfile \"{0}{1}\" \"{0}{2}\"".format(f_getPath(mf_path, mf_trackfileStr), mf_fileEndingAfter, mf_fileEndingBefore)
     print(executeStr)
     os.system(executeStr)
     
-def pub_removeFile(mf_path, mf_trackfileStr):
-    os.remove(pub_getPath(mf_path, mf_trackfileStr))
+def f_removeFile(mf_path, mf_trackfileStr):
+    os.remove(f_getPath(mf_path, mf_trackfileStr))
     
-def pub_getPath(mf_path, mf_file):
+def f_getPath(mf_path, mf_file):
     return os.path.normpath("{0}/{1}".format(mf_path, mf_file))
+
+def f_checkForPath(mf_subPath):
+    mypath = os.path.normpath("{0}".format(os.getcwd()) + mf_subPath)
+    if not os.path.exists(mypath):
+        os.system("mkdir {0}".format(mypath))
+    return mypath
+
+def f_checkForDownloadPath():
+    return f_checkForPath("/download")
+            
+def f_checkForImagePath():
+    return f_checkForPath("/images")
+
+def f_checkForPluginsPath():
+    return f_checkForPath("/plugins")
+
+def f_urlToString(url):
+    htmldings = urllib.request.urlopen(url);
+    return str(htmldings.read().decode('utf-8'));

@@ -6,8 +6,6 @@ import public_functions
 from PyQt4 import QtGui
 #from PyQt4 import QtCore
 
-import gui
-
 def priv_checkForDownloadPath():
     mypath = os.path.dirname("{0}".format(sys.argv[0])) + "/images";
     if not os.path.exists(mypath):
@@ -37,7 +35,7 @@ class AlbumGUI(QtGui.QWidget):
         
     def loadImageFromNet(self, mf_url, mf_imagePathAndName):
         ImageFile = open(mf_imagePathAndName, 'wb')
-        ImageFile.write(public_functions.pub_urlToStringData(mf_url))
+        ImageFile.write(public_functions.f_urlToStringData(mf_url))
         ImageFile.close()
         
         
@@ -60,16 +58,15 @@ class AlbumGUI(QtGui.QWidget):
             self.setPalette(self.m_pal_chosen)
     
     
-    def __init__(self, mf_thumpnailUrl, mf_imagePath, mf_artistName, mf_albumName, mf_description, mf_mainGUI, 
-                 mf_album, parent=None):
-        QtGui.QWidget.__init__(self, parent)
+    def __init__(self, mf_mainGUI, mf_thumpnailUrl, mf_imagePath, mf_artistName, mf_albumName, mf_description, mf_album):
+        QtGui.QWidget.__init__(self, mf_mainGUI.pub_getScrollWidget())
         self.m_thumpnailUrl = mf_thumpnailUrl 
-        self.m_imagepath = mf_imagePath
+        self.imagePath = mf_imagePath
         self.m_mainGUI = mf_mainGUI
         self.m_album   = mf_album
         self.alreadyChosen = False  
         self.m_thumpnailName = self.priv_check4Image(mf_thumpnailUrl)
-        self.m_imagepathAndName = self.m_imagepath + "/" + self.m_thumpnailName
+        self.m_imagepathAndName = os.path.normpath(self.imimagePath + "/" + self.m_thumpnailName)
         if not(self.priv_checkImageExists(self.m_imagepathAndName)):
             self.loadImageFromNet(self.m_thumpnailUrl, self.m_imagepathAndName)
             
