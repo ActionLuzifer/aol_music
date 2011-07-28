@@ -142,6 +142,8 @@ class GUI(QtGui.QWidget):
     def fcreatePlugin(self, mf_plugin):
         # altes Plugin löschen
         if self.oldPlugin:
+            for bla in range(self.albumToDownloadList.__len__()):
+                self.albumToDownloadList.pop()
             self.oldPlugin.fdestroy()
         # neues Plugin erstellen
         self.oldPlugin = mf_plugin

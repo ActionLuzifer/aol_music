@@ -105,7 +105,9 @@ class AOL_Music_NewFull:
 
 
     def fdestroy(self):
-        print("TODO")
+        for widget in self.listOfWidgets:
+            widget.hide()
+            widget.destroy()
 
 
     def fdownload(self, mf_widgets):
