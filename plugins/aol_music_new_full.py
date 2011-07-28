@@ -11,15 +11,29 @@ import album
 import gui_Album
 
 class PLUGIN:
-    def __init__(self, mf_gui, mf_downloadpath, mf_imagepath):
+    def fgetAnzahlPlugins():
+        return 3
+    
+    def __init__(self, mf_whichPlugin, mf_gui, mf_downloadpath, mf_imagepath):
+        self.whichPlugin  = mf_whichPlugin 
         self.plugin       = False
         self.gui          = mf_gui    
         self.downloadPath = mf_downloadpath
         self.imagepath    = mf_imagepath
+        self.pluginNames  = {0: "AOL MUSIC_New Releases, Full CDs", 
+                             1: "spinner",
+                             2: "zona estreno"}
+        self.pluginStrings= {0: "http://music.aol.com/new-releases-full-cds", 
+                             1: "http://www.spinner.com/new-releases",
+                             2: "http://musica.aol.com/zona-estreno"}
+
+
+    def _fgetURL(self):
+        return self.pluginStrings[self.whichPlugin]
 
 
     def fcreate(self):
-        self.plugin = AOL_Music_NewFull(self.gui, self.downloadPath, self.imagepath) 
+        self.plugin = AOL_Music_NewFull(self.gui, self.downloadPath, self.imagepath, self.pluginStrings[self.whichPlugin]) 
 
 
     def fdestroy(self):
@@ -28,7 +42,7 @@ class PLUGIN:
 
 
     def fgetName(self):
-        return ("AOL MUSIC_New Releases, Full CDs")
+        return self.pluginNames[self.whichPlugin]
 
 
     def fdownload(self, mf_widgets):
@@ -38,16 +52,17 @@ class PLUGIN:
 
 class AOL_Music_NewFull:
     
-    def __init__(self, mf_gui, mf_downloadpath, mf_imagepath):
+    def __init__(self, mf_gui, mf_downloadpath, mf_imagepath, mf_url):
         self.gui          = mf_gui    
         self.downloadPath = mf_downloadpath
         self.imagepath    = mf_imagepath
+        self.url          = mf_url
         self.gui.setWindowTitle('aol-musicLoader')
         self.maxWidth  = 0
         self.maxHeight = 0
         
         # 1. Website laden
-        mainLink = "http://music.aol.com/new-releases-full-cds";
+        mainLink = self.url;
         html_str = public_functions.f_urlToString(mainLink);
         
         # 2. Anzahl der Alben feststellen
