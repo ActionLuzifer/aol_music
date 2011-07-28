@@ -103,7 +103,8 @@ class GUI(QtGui.QWidget):
             albenWidget.resize(self.maxWidth, self.maxHeight)
             wx = (self.maxWidth+3)*self.aktColumn
             wy = (self.maxHeight+3)*self.aktRow
-            albenWidget.move(wx, wy);
+            albenWidget.move(wx, wy)
+            albenWidget.show()
             
             if(ww < wx+aw):
                 ww = wx+aw
@@ -112,7 +113,7 @@ class GUI(QtGui.QWidget):
         self.scrollWidget.resize(ww, wh+30)
         
             
-    def _fresizeEvent(self, ev):
+    def resizeEvent(self, ev):
         self.scrollArea.setGeometry(0,0,ev.size().width(), ev.size().height())
 
 
@@ -140,13 +141,15 @@ class GUI(QtGui.QWidget):
         # neues Plugin erstellen
         self.oldPlugin = mf_plugin
         mf_plugin.fcreate()
+        self.pub_arrageInhalteWidgets()
 
 
     def _fcreateMenus(self):
         self.menuBar = QtGui.QMenuBar(self)
-        self.menuPlugins = self.menuBar.addMenu("Plugins")
+        self.menuPlugins = self.menuBar.addMenu("&Plugins")
         self.testaction = QtGui.QAction("Test", self)
         self.connect(self.testaction, Qt.SIGNAL("triggered()"), self._ftest)
+        self.menuBar.show()
 
 
     def _ftest(self):

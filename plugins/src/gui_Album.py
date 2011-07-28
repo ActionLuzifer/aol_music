@@ -66,7 +66,7 @@ class AlbumGUI(QtGui.QWidget):
         self.m_album   = mf_album
         self.alreadyChosen = False  
         self.m_thumpnailName = self.priv_check4Image(mf_thumpnailUrl)
-        self.m_imagepathAndName = os.path.normpath(self.imimagePath + "/" + self.m_thumpnailName)
+        self.m_imagepathAndName = os.path.normpath(self.imagePath + "/" + self.m_thumpnailName)
         if not(self.priv_checkImageExists(self.m_imagepathAndName)):
             self.loadImageFromNet(self.m_thumpnailUrl, self.m_imagepathAndName)
             
@@ -101,4 +101,3 @@ class AlbumGUI(QtGui.QWidget):
         
         # Hauptfenster anzeigen
         self.resize(maxbreite, maxheight)
-        self.show()
