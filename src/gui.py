@@ -47,10 +47,7 @@ class GUI(QtGui.QWidget):
         self._fsearchForPlugins()
         
         self.goButton = Qt.QPushButton("Lade ausgewählte Inhalte", self.scrollWidget)
-        self.goButton.move(0, self.scrollWidget.height()-20)
-        self.goButton.resize(self.scrollWidget.width(), 20)
         self.connect(self.goButton, Qt.SIGNAL("clicked()"), self.priv_goButtonClicked)
-        self.goButton.show()
 
 
     def pub_arrageInhalteWidgets(self):
@@ -60,6 +57,13 @@ class GUI(QtGui.QWidget):
         self.aktColumn = -1;
         self.aktRow = 0;
         self.priv_arrangeAlben()
+        self.priv_arrangeDownloadButton()
+
+
+    def priv_arrangeDownloadButton(self):
+        self.goButton.move(0, self.scrollWidget.height()-20)
+        self.goButton.resize(self.scrollWidget.width(), 20)
+        self.goButton.show()
 
 
     def pub_addInhalte(self, mf_content, mf_maxWidth, mf_maxHeight):
