@@ -98,27 +98,42 @@ class GUI(QtGui.QWidget):
 
             
     def priv_arrangeAlben(self):
-        ww = 0
-        wh = 0
-        aw = self.maxWidth
-        ah = self.maxHeight
-        for albenWidget in self.listOfInhaltWidgets:
-            self.priv_setNextRowAndColumn()
-            albenWidget.resize(self.maxWidth, self.maxHeight)
-            wx = (self.maxWidth+3)*self.aktColumn
-            wy = (self.maxHeight+3)*self.aktRow
-            albenWidget.move(wx, wy)
-            albenWidget.show()
-            
-            if(ww < wx+aw):
-                ww = wx+aw
-            if(wh < wy+ah):
-                wh = wy+ah 
-        self.scrollWidget.resize(ww, wh+30)
-        
-            
+        #TODO: event = [SCREEN.width, screen.height]
+        event = [800, 600]
+        self.resizeWindows(event)
+
+
     def resizeEvent(self, ev):
         self.scrollArea.setGeometry(0,0,ev.size().width(), ev.size().height())
+        self.resizeWindows(ev.size().width(), ev.size().height())
+        
+    
+    def resizeWindows(self, windowWidth, windowHeight):
+        column = 0
+        row = 0
+        x_column = 0
+        y_row = 0
+        x_widget = 0
+        y_widget = 0
+        space = 3
+        
+        maxWidthOfWidget = 0
+        maxHeightOfWidget = 0
+        for widget in self.listOfInhaltWidgets:
+            widget.hide()
+            widgetWidth = widget.width()
+            widgetHeight = widget.height()
+            if x_column < windowWidth:
+                if maxHeightOfWidget > widgetHeight:
+                    maxHeightOfWidget = widgetHeight
+            else:
+                x_column = 0
+                maxHeightOfWidget = 0
+                y_row = y_row + maxHeightOfWidget + space
+
+            widget.move(x_column, y_row)
+            widget.show()
+            x_column = x_column + widgetWidth + space
 
 
     def _fsearchForPlugins(self):
