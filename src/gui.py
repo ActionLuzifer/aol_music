@@ -109,23 +109,17 @@ class GUI(QtGui.QWidget):
         
     
     def resizeWindows(self, windowWidth, windowHeight):
-        column = 0
-        row = 0
         x_column = 0
         y_row = 0
-        x_widget = 0
-        y_widget = 0
         space = 3
-        
         maxWidthOfWidget = 0
         maxHeightOfWidget = 0
+        
         for widget in self.listOfInhaltWidgets:
             widget.hide()
-            widgetWidth = widget.width()
-            widgetHeight = widget.height()
-            if x_column < windowWidth:
-                if maxHeightOfWidget > widgetHeight:
-                    maxHeightOfWidget = widgetHeight
+            if x_column < widget.width():
+                if maxHeightOfWidget > widget.height():
+                    maxHeightOfWidget = widget.height()
             else:
                 x_column = 0
                 maxHeightOfWidget = 0
@@ -133,7 +127,7 @@ class GUI(QtGui.QWidget):
 
             widget.move(x_column, y_row)
             widget.show()
-            x_column = x_column + widgetWidth + space
+            x_column = x_column + widget.width() + space
 
 
     def _fsearchForPlugins(self):
