@@ -112,7 +112,6 @@ class GUI(QtGui.QWidget):
         x_column = 0
         y_row = 0
         space = 3
-        maxWidthOfWidget = 0
         maxHeightOfWidget = 0
         
         for widget in self.listOfInhaltWidgets:
