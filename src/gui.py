@@ -99,8 +99,8 @@ class GUI(QtGui.QWidget):
             
     def priv_arrangeAlben(self):
         #TODO: event = [SCREEN.width, screen.height]
-        event = [800, 600]
-        self.resizeWindows(event)
+        self.scrollWidget.resize(800, 600)
+        self.resizeWindows(800, 600)
 
 
     def resizeEvent(self, ev):
@@ -117,14 +117,14 @@ class GUI(QtGui.QWidget):
         
         for widget in self.listOfInhaltWidgets:
             widget.hide()
-            if x_column < widget.width():
-                if maxHeightOfWidget > widget.height():
+            if (windowWidth - x_column - widget.width()) > 0:
+                if maxHeightOfWidget < widget.height():
                     maxHeightOfWidget = widget.height()
             else:
+                y_row = y_row + maxHeightOfWidget + space
                 x_column = 0
                 maxHeightOfWidget = 0
-                y_row = y_row + maxHeightOfWidget + space
-
+                
             widget.move(x_column, y_row)
             widget.show()
             x_column = x_column + widget.width() + space
