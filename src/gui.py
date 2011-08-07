@@ -52,11 +52,6 @@ class GUI(QtGui.QWidget):
 
 
     def pub_arrageInhalteWidgets(self):
-        # maximale Anzahl der Zeilen und Spalten ermitteln 
-        #  (durch das math.ceil wird sichergestellt,dass immer aufgerundet wird)
-        self.maxRows = math.ceil(math.sqrt(self.anzahlInhalte))
-        self.aktColumn = -1;
-        self.aktRow = 0;
         self.priv_arrangeAlben()
         self.priv_arrangeDownloadButton()
 
@@ -90,17 +85,8 @@ class GUI(QtGui.QWidget):
         self.albumToDownloadList.remove(gui_album)
         
     
-    def priv_setNextRowAndColumn(self):
-        if(self.aktColumn == self.maxRows):
-            self.aktRow = self.aktRow+1
-            self.aktColumn = 0;
-        else:
-            self.aktColumn = self.aktColumn + 1
-
-            
     def priv_arrangeAlben(self):
         #TODO: event = [SCREEN.width, screen.height]
-        self.scrollWidget.resize(800, 600)
         self.resizeWindows(800, 600)
 
 
