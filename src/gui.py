@@ -24,6 +24,7 @@ class GUI(QtGui.QWidget):
 
     def __init__(self, mf_downloadPath, mf_imagePath, mf_pluginspath, parent=None):
         QtGui.QWidget.__init__(self, parent)
+        self.doAResize = False
         self.oldPlugin = False
         self.albumToDownloadList = []
         self.listOfInhaltWidgets = []
@@ -109,24 +110,38 @@ class GUI(QtGui.QWidget):
         
     
     def resizeWindows(self, windowWidth, windowHeight):
-        x_column = 0
-        y_row = 0
-        space = 3
-        maxHeightOfWidget = 0
-        
-        for widget in self.listOfInhaltWidgets:
-            widget.hide()
-            if (windowWidth - x_column - widget.width()) > 0:
-                if maxHeightOfWidget < widget.height():
-                    maxHeightOfWidget = widget.height()
-            else:
-                y_row = y_row + maxHeightOfWidget + space
-                x_column = 0
-                maxHeightOfWidget = 0
-                
-            widget.move(x_column, y_row)
-            widget.show()
-            x_column = x_column + widget.width() + space
+        if not (self.doAResize == True):
+            self.doAResize = True
+            x_column = 0
+            max_x = 0
+            y_row = 0
+            space = 3
+            maxHeightOfWidget = 0
+            maxWidthOfWidget = 0
+            
+            for widget in self.listOfInhaltWidgets:
+                widget.hide()
+                if (windowWidth - x_column - widget.width()) > 0:
+                    if maxHeightOfWidget < widget.height():
+                        maxHeightOfWidget = widget.height()
+                    if maxWidthOfWidget < widget.width():
+                        maxWidthOfWidget = widget.width()
+                else:
+                    y_row = y_row + maxHeightOfWidget + space
+                    if max_x < x_column:
+                        max_x = x_column
+
+                    x_column = 0
+                    maxHeightOfWidget = 0
+                    
+                widget.move(x_column, y_row)
+                widget.show()
+                x_column = x_column + widget.width() + space
+
+            if max_x < x_column:
+                max_x = x_column
+            self.scrollWidget.resize(max_x+maxWidthOfWidget, y_row + maxHeightOfWidget)
+        self.doAResize = False
 
 
     def _fsearchForPlugins(self):
