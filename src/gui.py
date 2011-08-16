@@ -41,14 +41,16 @@ class GUI(QtGui.QWidget):
         self.scrollArea.setWidget(self.scrollWidget)
         self.scrollArea.show()
         self.scrollWidget.show()        
-        self.show()
-        self.resize(800,600)
         self.move(30,30)
         self._fcreateMenus()
         self._fsearchForPlugins()
         
         self.goButton = Qt.QPushButton("Lade ausgewählte Inhalte", self.scrollWidget)
         self.connect(self.goButton, Qt.SIGNAL("clicked()"), self.priv_goButtonClicked)
+        
+        self.resize(800,600)
+        self.show()
+        
 
 
     def pub_arrageInhalteWidgets(self):
@@ -58,7 +60,7 @@ class GUI(QtGui.QWidget):
 
     def priv_arrangeDownloadButton(self):
         self.goButton.move(0, self.scrollWidget.height()-20)
-        self.goButton.resize(self.scrollWidget.width(), 20)
+        self.goButton.resize(self.scrollArea.width()-20, 20)
         self.goButton.show()
 
 
@@ -91,8 +93,9 @@ class GUI(QtGui.QWidget):
 
 
     def resizeEvent(self, ev):
-        self.scrollArea.setGeometry(0,0,ev.size().width(), ev.size().height())
+        self.scrollArea.resize(ev.size().width(), ev.size().height()+20)
         self.resizeWindows(ev.size().width(), ev.size().height())
+        self.priv_arrangeDownloadButton()
         
     
     def resizeWindows(self, windowWidth, windowHeight):
@@ -126,7 +129,7 @@ class GUI(QtGui.QWidget):
 
             if max_x < x_column:
                 max_x = x_column
-            self.scrollWidget.resize(max_x+maxWidthOfWidget, y_row + maxHeightOfWidget)
+            self.scrollWidget.resize(max_x+maxWidthOfWidget, y_row + maxHeightOfWidget+21)
         self.doAResize = False
 
 
