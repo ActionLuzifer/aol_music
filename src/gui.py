@@ -89,7 +89,7 @@ class GUI(QtGui.QWidget):
     
     def priv_arrangeAlben(self):
         #TODO: event = [SCREEN.width, screen.height]
-        self.resizeWindows(800, 600)
+        self.resizeWindows(self.width(), self.height())
 
 
     def resizeEvent(self, ev):
