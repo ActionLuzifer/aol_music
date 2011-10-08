@@ -121,7 +121,8 @@ class GUI(QtGui.QWidget):
                         max_x = x_column
 
                     x_column = 0
-                    maxHeightOfWidget = 0
+                    maxHeightOfWidget = widget.height()
+                    maxWidthOfWidget = widget.width()
                     
                 widget.move(x_column, y_row)
                 widget.show()
