@@ -124,3 +124,13 @@ def f_checkForPluginsPath():
 def f_urlToString(url):
     htmldings = urllib.request.urlopen(url);
     return str(htmldings.read().decode('utf-8'));
+
+
+def f_tagmp3File(filename, artist, year, album, tracknr, tracktitle):
+    print("TODO: TAGGING")
+    print("filename   : "+filename)
+    print("artist     : "+artist)
+    print("year       : "+year)
+    print("album      : "+album)
+    print("tracknr    : {:0>2}".format(repr(tracknr)))
+    print("tracktitle : "+tracktitle)
