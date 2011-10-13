@@ -108,7 +108,7 @@ class Album:
         myCover.close()
         
         for mytrack in self._queueOfTrack:
-            trackfileStr = public_functions.f_getOSFilenameStr(fileStr + "{:0>2}_-_{}".format(mytrack.m_trackNr, mytrack.m_title))
+            trackfileStr = public_functions.f_getOSFilenameStr(fileStr + "{:0>2}_-_{}".format(mytrack.pub_get_tracknr(), mytrack.pub_get_tracktitle()))
             mytrack.pub_downloadTo(mf_path, mf_really, trackfileStr+".flv");
             public_functions.f_transcode(mf_path, trackfileStr, ".flv", ".mp3")
             public_functions.f_removeFile(mf_path, trackfileStr + ".flv")
