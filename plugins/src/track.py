@@ -28,3 +28,10 @@ class Track:
             myTrackFile.close()
         else:
             print("{0} -> {1}/{2}".format(self.m_url, mf_path, fileStr))
+
+    def pub_get_tracknr(self):
+        return self.m_trackNr
+
+
+    def pub_get_tracktitle(self):
+        return self.m_title
