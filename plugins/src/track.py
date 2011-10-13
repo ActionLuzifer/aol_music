@@ -28,7 +28,6 @@ class Track:
             myTrackFile = open(self.m_filename, 'wb')
             myTrackFile.write(public_functions.f_urlToStringData(self.m_url))
             myTrackFile.close()
-            
         else:
             print("{0} -> {1}/{2}".format(self.m_url, mf_path, fileStr))
 
