@@ -112,5 +112,4 @@ class Album:
             mytrack.pub_downloadTo(mf_path, mf_really, trackfileStr+".flv");
             public_functions.f_transcode(mf_path, trackfileStr, ".flv", ".mp3")
             public_functions.f_removeFile(mf_path, trackfileStr + ".flv")
-            public_functions.f_tagmp3File(os.path.normpath("{0}/{1}.mp3".format(mf_path, trackfileStr)),
-                                          self._album_name, self._release_date, self._artist_name, mytrack.pub_get_tracknr(), mytrack.pub_get_tracktitle())
+            mytrack.pub_tag()
