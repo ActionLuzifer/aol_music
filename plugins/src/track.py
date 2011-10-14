@@ -22,10 +22,10 @@ class Track:
         self.m_filename  = ""
 
 
-    def pub_downloadTo(self, mf_path, mf_really, fileStr):
+    def pub_downloadTo(self, mf_path, mf_really, fileStr, fileStrEnd):
         if mf_really :
             self.m_filename = public_functions.f_getPath(mf_path, fileStr)
-            myTrackFile = open(self.m_filename, 'wb')
+            myTrackFile = open(self.m_filename+fileStrEnd, 'wb')
             myTrackFile.write(public_functions.f_urlToStringData(self.m_url))
             myTrackFile.close()
         else:
@@ -40,5 +40,5 @@ class Track:
     
     def pub_tag(self):
         if not self.m_filename == "":
-            public_functions.f_tagmp3File(self.m_filename, self.m_album._album_name, self.m_album._release_date, 
+            public_functions.f_tagmp3File(self.m_filename+".mp3", self.m_album._album_name, self.m_album._release_date, 
                                           self.m_album._artist_name, self.pub_get_tracknr(), self.pub_get_tracktitle())

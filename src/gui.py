@@ -141,7 +141,7 @@ class GUI(QtGui.QWidget):
         for file in files:
             file = file.replace(".py", "")
             pluginImport = __import__(file, globals(), locals(), [], 0)
-            for xtesPlugins in range(pluginImport.PLUGIN.fgetAnzahlPlugins()):
+            for xtesPlugins in range(pluginImport.fgetAnzahlPlugins()):
                 plugin = pluginImport.PLUGIN(xtesPlugins, self, self.downloadPath, self.imagePath)
                 self.plugins.append(plugin)
                 self._fcreateActionAndMenu(plugin)

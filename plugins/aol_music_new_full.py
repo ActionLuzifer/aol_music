@@ -10,9 +10,12 @@ import public_functions
 import album
 import gui_Album
 
+
+def fgetAnzahlPlugins():
+    return 3
+
+
 class PLUGIN:
-    def fgetAnzahlPlugins():
-        return 3
     
     def __init__(self, mf_whichPlugin, mf_gui, mf_downloadpath, mf_imagepath):
         self.whichPlugin  = mf_whichPlugin 

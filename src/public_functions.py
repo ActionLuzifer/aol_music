@@ -1,6 +1,7 @@
 import os
 import sys
 import urllib.request
+import stagger
 from stagger.id3 import *       # contains ID3 frame types
 
 def f_urlToStringData(url):
@@ -141,3 +142,4 @@ def f_tagmp3File(filename, artist, year, album, tracknr, tracktitle):
     tag24.track = tracknr
     print("tracktitle : "+tracktitle)
     tag24.title = tracktitle
+    tag24.write(filename)
