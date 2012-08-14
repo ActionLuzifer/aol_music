@@ -40,5 +40,5 @@ class Track:
     
     def pub_tag(self):
         if not self.m_filename == "":
-            public_functions.f_tagmp3File(self.m_filename+".mp3", self.m_album._album_name, self.m_album._release_date, 
-                                          self.m_album._artist_name, self.pub_get_tracknr(), self.pub_get_tracktitle())
+            public_functions.f_tagmp3File(self.m_filename+".mp3", self.m_album._artist_name, self.m_album._release_date, 
+			                              self.m_album._album_name, self.pub_get_tracknr(), self.pub_get_tracktitle())

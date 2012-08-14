@@ -76,7 +76,13 @@ class GUI(QtGui.QWidget):
 
 
     def priv_goButtonClicked(self):
-        self.oldPlugin.fdownload(self.albumToDownloadList)
+        try:
+            self.oldPlugin.fdownload(self.albumToDownloadList)
+        except:
+            exctype, value = sys.exc_info()[:2]
+            print("ERROR@GUI::priv_goButtonClicked(self)")
+            print("Typ:  "+exctype)
+            print("Wert: "+value)
 
 
     def pub_addAlbumToDownloadList(self, gui_album):

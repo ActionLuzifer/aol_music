@@ -1,4 +1,5 @@
 # Importieren is immer wichtich
+#<segments>
 import sys
 import re
 import json
@@ -76,20 +77,27 @@ class AOL_Music_NewFull:
         self.listOfAlben = [];
         self.listOfWidgets = []
         for line in html_str:
-            line = line.strip();
-            foundObject = REprogramm.search(line);
-            if(foundObject):
-                anzahlAlben = anzahlAlben+1;
-                urlstr = foundObject.group("PlaylistUrl");
-                albumstr = public_functions.f_urlToString(urlstr);
-                albumstr = albumstr.replace("\/", "/");
-                albumjson = json.loads(albumstr);
-                albumjsonFormatted = json.dumps(albumjson, sort_keys=True, indent=4)
-                newalbum = album.Album(albumjson, albumjsonFormatted);
-                self.listOfAlben.append(newalbum);
-                self._fcreateWidgets(newalbum)
+            try:
+                line = line.strip();
+                foundObject = REprogramm.search(line);
+                if(foundObject):
+                    anzahlAlben = anzahlAlben+1;
+                    urlstr = foundObject.group("PlaylistUrl");
+                    albumstr = public_functions.f_urlToString(urlstr);
+                    albumstr = albumstr.replace("\/", "/");
+                    albumjson = json.loads(albumstr);
+                    albumjsonFormatted = json.dumps(albumjson, sort_keys=True, indent=4)
+                    newalbum = album.Album(albumjson, albumjsonFormatted);
+                    self.listOfAlben.append(newalbum);
+                    self._fcreateWidgets(newalbum)
+            except:
+                exctype, value = sys.exc_info()[:2]
+                print("ERROR@AOL_Music_NewFull::def __init__(self, mf_gui, mf_downloadpath, mf_imagepath, mf_url)")
+                print("Typ:  "+exctype)
+                print("Wert: "+value)
 
         self.gui.pub_addInhalte(self.listOfWidgets, self.maxWidth, self.maxHeight)
+
 
     def _fcreateWidgets(self, mf_album):
         albumWidget = gui_Album.AlbumGUI(self.gui,

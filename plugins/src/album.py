@@ -35,6 +35,7 @@ class Album:
         self._count             = self.albumjson['count']; #10
         self._queueOfTrack      = [];
         self.priv_createTracks(self.albumjson['tracks']);
+
         
     def priv_createTracks(self, mf_tracksJSONobj):
         trackNr = 0;
@@ -43,23 +44,30 @@ class Album:
             mytrack = track.Track(self, jtrack, trackNr);
             self._queueOfTrack.append(mytrack);
 
+
     def getwasDownloaded(self):
         return self._wasDownloaded;
+
     
     def getalbum_art(self):
         return self._album_art;
+
         
     def getalbum_name(self):
         return self._album_name;
+
     
     def getalbum_thumbnail(self):
         return self._album_thumbnail;
+
     
     def getartist_name(self):
         return self._artist_name;
+
     
     def getartist_profile(self):
         return self._artist_profile;
+
     
     def getch_id(self):
         return self._ch_id;
@@ -110,6 +118,7 @@ class Album:
         for mytrack in self._queueOfTrack:
             trackfileStr = public_functions.f_getOSFilenameStr(fileStr + "{:0>2}_-_{}".format(mytrack.pub_get_tracknr(), mytrack.pub_get_tracktitle()))
             mytrack.pub_downloadTo(mf_path, mf_really, trackfileStr, ".flv");
-            public_functions.f_transcode(mf_path, trackfileStr, ".flv", ".mp3")
-            public_functions.f_removeFile(mf_path, trackfileStr + ".flv")
-            mytrack.pub_tag()
+            if (public_functions.f_transcode(mf_path, trackfileStr, ".flv", ".mp3")==0):
+                print("remove")
+                public_functions.f_removeFile(mf_path, trackfileStr + ".flv")
+                mytrack.pub_tag()

@@ -75,10 +75,28 @@ def f_replaceBadChars(mf_executeStr):
     mf_executeStr = mf_executeStr.replace("&thorn;", "þ") #     kleines Thorn (isländisch)     &thorn;     &#254;
     mf_executeStr = mf_executeStr.replace("&#255;", "ÿ")  #     y Umlaut     &yuml;     &#255;
     mf_executeStr = mf_executeStr.replace("&yuml;", "ÿ")  #     y Umlaut     &yuml;     &#255;
+    #mf_executeStr = mf_executeStr.replace("$$", "\$\$")  #     y Umlaut     &yuml;     &#255;
+    #mf_executeStr = mf_executeStr.replace("!", "\!")  #     y Umlaut     &yuml;     &#255;
 
     if sys.platform.startswith('win32') or sys.platform.startswith('cygwin'):
         mf_executeStr = mf_executeStr.replace(":", "-")
         mf_executeStr = mf_executeStr.replace("?", "_")
+    return mf_executeStr
+
+
+def f_replaceBadCharsForConsole(mf_executeStr):
+    mf_executeStr = mf_executeStr.replace("!", "\!")
+    mf_executeStr = mf_executeStr.replace("$", "\$")
+    mf_executeStr = mf_executeStr.replace(" ", "\ ")
+    mf_executeStr = mf_executeStr.replace("(", "\(")
+    mf_executeStr = mf_executeStr.replace(")", "\)")
+    mf_executeStr = mf_executeStr.replace("&", "\&")
+    mf_executeStr = mf_executeStr.replace("\'", "\\'")
+    mf_executeStr = mf_executeStr.replace(":", "\:")
+    mf_executeStr = mf_executeStr.replace(";", "\;")
+    mf_executeStr = mf_executeStr.replace("%", "\%")
+    mf_executeStr = mf_executeStr.replace('\"', '\\"')
+    
     return mf_executeStr
 
 def f_getPathStrWithoutLaufwerk(mf_executeStr):
@@ -98,9 +116,12 @@ def f_getOSFilenameStr(mf_filenameStr):
     return mf_filenameStr
 
 def f_transcode(mf_path, mf_trackfileStr, mf_fileEndingBefore, mf_fileEndingAfter):
-    executeStr = "mplayer -dumpaudio -dumpfile \"{0}{1}\" \"{0}{2}\"".format(f_getPath(mf_path, mf_trackfileStr), mf_fileEndingAfter, mf_fileEndingBefore)
+    executeStr = "mplayer -dumpaudio -dumpfile {0}{1} {0}{2}".format(f_replaceBadCharsForConsole(f_getPath(mf_path, mf_trackfileStr)),
+                                                                     mf_fileEndingAfter, mf_fileEndingBefore)
     print(executeStr)
-    os.system(executeStr)
+    returncode = os.system(executeStr)
+    print(returncode)
+    return returncode
     
 def f_removeFile(mf_path, mf_trackfileStr):
     os.remove(f_getPath(mf_path, mf_trackfileStr))
@@ -129,6 +150,10 @@ def f_urlToString(url):
 
 
 def f_tagmp3File(filename, artist, year, album, tracknr, tracktitle):
+    artist     = f_replaceBadChars(artist)
+    album      = f_replaceBadChars(album)
+    tracktitle = f_replaceBadChars(tracktitle)
+     
     print("TODO: TEST-TAGGING")
     tag24 = stagger.Tag24()
     print("filename   : "+filename)
