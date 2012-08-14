@@ -116,12 +116,15 @@ def f_getOSFilenameStr(mf_filenameStr):
     return mf_filenameStr
 
 def f_transcode(mf_path, mf_trackfileStr, mf_fileEndingBefore, mf_fileEndingAfter):
-    executeStr = "mplayer -dumpaudio -dumpfile {0}{1} {0}{2}".format(f_replaceBadCharsForConsole(f_getPath(mf_path, mf_trackfileStr)),
-                                                                     mf_fileEndingAfter, mf_fileEndingBefore)
-    print(executeStr)
-    returncode = os.system(executeStr)
-    print(returncode)
-    return returncode
+    try:
+        executeStr = "mplayer -dumpaudio -dumpfile {0}{1} {0}{2}".format(f_replaceBadCharsForConsole(f_getPath(mf_path, mf_trackfileStr)),
+                                                                         mf_fileEndingAfter, mf_fileEndingBefore)
+        print(executeStr)
+        returncode = os.system(executeStr)
+        print(returncode)
+        return returncode
+    except:
+        return -1
     
 def f_removeFile(mf_path, mf_trackfileStr):
     os.remove(f_getPath(mf_path, mf_trackfileStr))
